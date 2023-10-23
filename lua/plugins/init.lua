@@ -73,6 +73,9 @@ local default_plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     init = function()
       require("core.utils").lazy_load "nvim-treesitter"
     end,
@@ -137,11 +140,16 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "folke/neodev.nvim",
+    },
+
     init = function()
       require("core.utils").lazy_load "nvim-lspconfig"
     end,
     config = function()
-      require "plugins.configs.lspconfig"
+    require "plugins.configs.lspconfig"
     end,
   },
 
@@ -270,10 +278,22 @@ local default_plugins = {
     cmd = {"G", "Git"},
   },
   -- COPILOT
+  -- {
+  --   "github/copilot.vim",
+  --   cmd = {"Copilot"},
+  -- },
   {
-    "github/copilot.vim",
-    cmd = {"Copilot"},
-  },
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+
+    -- opts = function()
+    --   return require "plugins.configs.copilot"
+    -- end,
+    config = function()
+      require("copilot").setup(require "plugins.configs.copilot")
+    end,
+  }
 }
 
 local config = require("core.utils").load_config()
