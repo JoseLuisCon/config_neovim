@@ -74,7 +74,7 @@ local default_plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-    "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
     init = function()
       require("core.utils").lazy_load "nvim-treesitter"
@@ -149,7 +149,7 @@ local default_plugins = {
       require("core.utils").lazy_load "nvim-lspconfig"
     end,
     config = function()
-    require "plugins.configs.lspconfig"
+      require "plugins.configs.lspconfig"
     end,
   },
 
@@ -191,6 +191,7 @@ local default_plugins = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-git",
       },
     },
     opts = function()
@@ -237,7 +238,12 @@ local default_plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
 
     cmd = "Telescope",
     init = function()
@@ -272,28 +278,22 @@ local default_plugins = {
     end,
   },
 
- -- Plugin load Fugitive Git Plugin
+  -- Plugin load Fugitive Git Plugin
   {
     "tpope/vim-fugitive",
-    cmd = {"G", "Git"},
+    cmd = { "G", "Git" },
   },
-  -- COPILOT
-  -- {
-  --   "github/copilot.vim",
-  --   cmd = {"Copilot"},
-  -- },
+
+
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
 
-    -- opts = function()
-    --   return require "plugins.configs.copilot"
-    -- end,
     config = function()
       require("copilot").setup(require "plugins.configs.copilot")
     end,
-  }
+  },
 }
 
 local config = require("core.utils").load_config()

@@ -1,4 +1,6 @@
 local cmp = require "cmp"
+local luasnip = require "luasnip"
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 
 dofile(vim.g.base46_cache .. "cmp")
 
@@ -62,7 +64,7 @@ local options = {
   },
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
 
@@ -112,6 +114,35 @@ local options = {
     { name = "path" },
   },
 }
+
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
+
+-- Set configurationfor specific filetype
+cmp.setup.filetype("gitcommit", {
+  sources = cmp.config.sources({
+    { name = "git" },
+  }, {
+    { name = "buffer" },
+  }),
+})
+
+--Use buffer source for `/` and `?`
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+-- Use cmdline & path source for ':'
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
 
 if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then
   options.window.completion.border = border "CmpBorder"
