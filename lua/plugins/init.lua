@@ -162,6 +162,7 @@ local default_plugins = {
         -- snippet plugin
         "L3MON4D3/LuaSnip",
         dependencies = "rafamadriz/friendly-snippets",
+        version = "v2.*",
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           require("plugins.configs.others").luasnip(opts)
@@ -192,6 +193,8 @@ local default_plugins = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-git",
+        "hrsh7th/cmp-cmdline",
+        "windwp/nvim-autopairs",
       },
     },
     opts = function()
@@ -201,6 +204,7 @@ local default_plugins = {
       require("cmp").setup(opts)
     end,
   },
+  { 'echasnovski/mini.nvim', version = '*' },
 
   {
     "numToStr/Comment.nvim",
@@ -291,7 +295,7 @@ local default_plugins = {
     event = "InsertEnter",
 
     config = function()
-      require("copilot").setup(require "plugins.configs.copilot")
+    require("copilot").setup(require "plugins.configs.copilot")
     end,
   },
 }
